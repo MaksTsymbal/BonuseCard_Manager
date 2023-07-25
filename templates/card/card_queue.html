@@ -1,0 +1,43 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    <div class="card-body">
+        <h5 class="card-title mb-3">
+            Card Queue
+        </h5>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Card ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Created On</th>
+                    <th scope="col">Created By</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for card in cards %}
+                <tr>
+                    <td><small>{{ card.card_number }}</small></td>
+                    <td><small>{{ card.title }}</small></td>
+                    <td><small>{{ card.date_created }}</small></td>
+                    <td>{{ card.created_by }}</td>
+
+                    {% if card.card_status == 'Active'%}
+                    <td><span class="badge bg-success">Active</span></td>
+                    {% elif card.card_status == 'Pending' %}
+                    <td><span class="badge bg-warning">Pending</span></td>
+                    {% elif card.card_status == 'Disabled' %}
+                    <td><span class="badge bg-danger">Disabled</span></td>
+                    {% endif %}
+                    <td><small><a href="{% url 'activate-card' card.pk %}">Activate</a> </small></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock content %}

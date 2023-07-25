@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mx-auto" style="width: 40rem;">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">{{ card.title }}</h5>
+                    <p><b>Card Number: </b><small>{{ card.card_number }}</small></p>
+                    <p class="card-text"><b>Card Description: </b>{{ card.description }}</p>
+
+                    <div class="row">
+                        <div class="col">
+                            <b>Date Created:</b> {{ card.date_created }}
+                        </div>
+                    </div> <br>
+                    <div class="row">
+                        <div class="col">
+                            {% if card.is_resolved %}
+                            <b>Status:</b> <span class="badge bg-danger">Disabled</span>
+                            {% else %}
+                            <b>Status:</b> <span class="badge bg-success">Active</span>
+                            {% endif %}
+                        </div>
+                        <div class="col">
+                            <b>Accepted date:</b> <small>{{ card.accepted_date }}</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <b>Created By:</b> <small>{{ card.created_by }}</small>
+                        </div>
+                        <div class="col">
+                            <b>Assigned To:</b> {{ card.assigned_to }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mx-auto" style="width: 40rem;">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">All cards created by {{ card.created_by }}</h5>
+                    {% for card in cards_per_user %}
+                    <p class="card-text">{{ card.title }} <a href="{% url 'card_details' card.pk%}">(view)</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+<br>
+{% if request.user.is_engineer and not card.is_resolved%}
+<a href="{% url 'disable-card' card.pk %}" class="btn btn-danger">Disable Card</a>
+{% endif %}
+
+
+{% if request.user.is_customer and not card.is_resolved %}
+<a href="{% url 'update-card' card.pk %}" class="btn btn-primary">Update Card</a>
+{% endif %}
+
+{% if request.user.is_engineer and card.is_resolved %}
+    <a href="{% url 'activate-card' card.pk %}" class="btn btn-success">Activate Card</a>
+{% endif %}
+
+
+{% endblock content %}
