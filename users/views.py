@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from .form import RegisterCustomerForm
+from .models import User
+from django.http import JsonResponse
 
 def register_customer(request):
     if request.method == 'POST':
@@ -41,6 +43,10 @@ def logout_user(request):
     logout(request)
     messages.info(request, 'Your session ended. Please log in to continue')
     return redirect('login')
+
+def view_all_users(request):
+    cards = User.objects.all().values()
+    return JsonResponse(list(cards), safe=False)
 
 
 

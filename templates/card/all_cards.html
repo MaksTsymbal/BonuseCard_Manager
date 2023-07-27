@@ -34,7 +34,7 @@
                     <td><span class="badge bg-success">Active</span></td>
                     {% elif card.card_status == 'Pending' %}
                     <td><span class="badge bg-warning">Pending</span></td>
-                    {% elif card.card_status == 'Disabled' %}
+                    {% elif card.card_status == 'Disable' %}
                     <td><span class="badge bg-danger">Disabled</span></td>
                     {% endif %}
                     <td><small><a href="{% url 'card_details' card.pk %}">View Details</a> </small></td>

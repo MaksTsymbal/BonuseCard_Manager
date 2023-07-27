@@ -11,4 +11,5 @@ urlpatterns = [
     path('disable-card/<int:pk>/', views.disable_card, name='disable-card'),
     path('workspace/', views.workspace, name='workspace'),
     path('all-disabled-cards/', views.all_disabled_cards, name='all-disabled-cards'),
+    path('view-cards/', views.view_all_cards, name='view-cards'),
 ]

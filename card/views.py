@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import Card
 from .form import CreateCardForm, UpdateCardForm
 from users.models import User
+from django.http import JsonResponse
 
 def card_details(request, pk):
     card = Card.objects.get(pk=pk)
@@ -12,6 +13,9 @@ def card_details(request, pk):
     context = {'card': card, 'cards_per_user': cards_per_user}
     return render(request, 'card/card_details.html', context)
 
+def view_all_cards(request):
+    cards = Card.objects.all().values()
+    return JsonResponse(list(cards), safe=False)
 
 def create_card(request):
     if request.method == 'POST':

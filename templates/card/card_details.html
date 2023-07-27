@@ -52,7 +52,7 @@
     </div>
 
 <br>
-{% if request.user.is_engineer and not card.is_resolved%}
+{% if request.user.is_engineer and not card.is_resolved %}
 <a href="{% url 'disable-card' card.pk %}" class="btn btn-danger">Disable Card</a>
 {% endif %}
 
